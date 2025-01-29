@@ -1,0 +1,1 @@
+print("adgih akwfu".replace(" ", ""))
