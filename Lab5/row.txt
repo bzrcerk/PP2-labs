@@ -1,0 +1,74 @@
+Dataset for Practicing Regex Matching
+
+1. Strings with 'a' followed by zero or more 'b's
+   a
+   ab
+   abb
+   abbb
+   aBBBB
+   acb
+   bba
+   aaabb
+
+2. Strings with 'a' followed by exactly two to three 'b's
+   abb
+   abbb
+   abbbb
+   aBBBB
+   a
+   acb
+   aabbb
+
+3. Sequences of lowercase letters joined with an underscore
+   hello_world
+   regex_practice
+   test_case
+   Python_Regex
+   valid_variable
+   not_valid123
+   _underscore
+
+4. One uppercase letter followed by lowercase letters
+   Apple
+   HelloWorld
+   RegexPractice
+   UPPERCASE
+   lowercase
+   Test123
+
+5. Strings with 'a' followed by anything, ending in 'b'
+   axb
+   a123b
+   ab
+   aXyzZb
+   acdb
+   bbba
+   abc
+
+6. Replace space, comma, or dot with a colon
+   Hello, world. How are you?
+   This is a test, a simple one.
+   Replace spaces, commas, and dots.
+   Regex is fun.
+
+7. Convert snake_case to camelCase
+   hello_world → helloWorld
+   convert_this_example → convertThisExample
+   snake_case_string → snakeCaseString
+   this_is_a_test → thisIsATest
+
+8. Split a string at uppercase letters
+   HelloWorldExample → ["Hello", "World", "Example"]
+   ThisIsATest → ["This", "Is", "A", "Test"]
+   RegexPracticeTask → ["Regex", "Practice", "Task"]
+
+9. Insert spaces between words starting with capital letters
+   HelloWorld → Hello World
+   InsertSpacesHere → Insert Spaces Here
+   MyNewString → My New String
+
+10. Convert camelCase to snake_case
+   helloWorld → hello_world
+   convertThisExample → convert_this_example
+   camelCaseString → camel_case_string
+   thisIsATest → this_is_a_test

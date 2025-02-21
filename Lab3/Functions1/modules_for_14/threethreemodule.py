@@ -1,4 +1,4 @@
-def has_33(ints):
+def has_33(ints: any):
 	for i in range(len(ints)-1):
 		if ints[i] == ints[i+1] and ints[i] == "3":
 			return True

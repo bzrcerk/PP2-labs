@@ -12,3 +12,5 @@ myfamily = {
     "year" : 2011
   }
 }
+
+print(myfamily['child1']['name'])

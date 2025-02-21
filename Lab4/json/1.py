@@ -28,7 +28,7 @@ print()
 for src in source:
 	data_res = src["l1PhysIf"]["attributes"]
 	dn = data_res["dn"].ljust(headers['DN'])
-	des = data_res['descr'].ljust(headers['Description'])
+	des = data_res['descr'].ljust(headers['Description']-2)
 	speed = data_res['speed'].ljust(headers['Speed'])
 	mtu = data_res['mtu'].ljust(headers['MTU'])
 	print(dn, des, speed, mtu)
