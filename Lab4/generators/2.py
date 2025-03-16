@@ -3,6 +3,7 @@ def evens(n):
 		if i % 2 == 0:
 			yield i
 
+
 x = int(input("Enter number: "))
 
 a = evens(x)
