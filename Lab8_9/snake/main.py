@@ -23,13 +23,6 @@ image_game_over = font1.render("Game Over", True, "black")
 image_game_over_rect = image_game_over.get_rect(center=(WIDTH // 2, HEIGHT // 2))
 
 
-# Function to draw a simple grid
-def draw_grid():
-    for i in range(HEIGHT // 2):
-        for j in range(WIDTH // 2):
-            pygame.draw.rect(screen, colorGRAY, (i * CELL, j * CELL, CELL, CELL), 1)
-
-
 # Function to draw a chessboard-like grid
 def draw_grid_chess():
     colors = [colorWHITE, colorGRAY]
@@ -83,7 +76,7 @@ class Snake:
         if head.x == food.pos.x and head.y == food.pos.y:
             print("Got food!")
             self.body.append(Point(head.x, head.y))  # Grow the snake
-            self.score += 1
+            self.score += food.value  # Add food's weight to score
 
             # Increase level every 3 points
             if self.score % 3 == 0:
@@ -96,29 +89,40 @@ class Snake:
 # Class representing the food
 class Food:
     def __init__(self):
-        # Initialize food position and value
-        self.pos = Point(9, 9)
-        self.value = random.randint(1, 10)
+        self.generate_new()
 
-    # Draw the food on the screen
+    # Generate a new food with position and value
+    def generate_new(self):
+        self.pos = Point(
+            random.randint(0, WIDTH // CELL - 1), random.randint(0, HEIGHT // CELL - 1)
+        )
+        self.value = random.randint(1, 5)
+        self.timer_start = time.time()  # Start the disappearance timer
+
+    # Draw the food and its value
     def draw(self):
         pygame.draw.rect(
             screen, colorGREEN, (self.pos.x * CELL, self.pos.y * CELL, CELL, CELL)
         )
+        font = pygame.font.SysFont("Verdana", 15)
+        value_text = font.render(str(self.value), True, colorBLACK)
+        screen.blit(value_text, (self.pos.x * CELL + 5, self.pos.y * CELL + 5))
 
-    # Generate a random position for the food, avoiding the snake's body
+    # Generate new food avoiding snake body
     def generate_rand(self, snake_body):
         while True:
             x = random.randint(0, WIDTH // CELL - 1)
             y = random.randint(0, HEIGHT // CELL - 1)
-            conflict = False
-            for segment in snake_body:
-                if segment.x == x and segment.y == y:
-                    conflict = True
-                    break
+            conflict = any(segment.x == x and segment.y == y for segment in snake_body)
             if not conflict:
                 self.pos = Point(x, y)
+                self.value = random.randint(1, 5)
+                self.timer_start = time.time()
                 break
+
+    # Check if food timer expired (5 seconds)
+    def is_expired(self):
+        return time.time() - self.timer_start > 5
 
 
 # Game settings
@@ -134,9 +138,9 @@ running = True
 while running:
     # Handle events
     for event in pygame.event.get():
-        if event.type == pygame.QUIT:  # Quit the game
+        if event.type == pygame.QUIT:
             running = False
-        if event.type == pygame.KEYDOWN:  # Handle key presses
+        if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_RIGHT:
                 snake.dx = 1
                 snake.dy = 0
@@ -162,6 +166,11 @@ while running:
         food.generate_rand(snake.body)
         if result == "LEVEL_UP":
             FPS += 2  # Increase game speed
+
+    # Handle food expiration
+    if food.is_expired():
+        print("Food expired and disappeared!")
+        food.generate_rand(snake.body)
 
     # Check if the snake hits the wall
     head = snake.body[0]
